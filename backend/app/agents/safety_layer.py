@@ -1,5 +1,5 @@
 from typing import Dict, List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from app.config import settings
 
 # Alert cooldown: suppress repeated alerts for the same encounter
@@ -70,7 +70,8 @@ class SafetyLayer:
         if should_alert and not blocked:
             last_alert = self._alert_cooldown.get(encounter_id)
             if last_alert is not None:
-                elapsed = (datetime.utcnow() - last_alert).total_seconds() / 60
+                now = datetime.now(timezone.utc).replace(tzinfo=None)
+                elapsed = (now - last_alert).total_seconds() / 60
                 if elapsed < _ALERT_COOLDOWN_MINUTES:
                     warnings.append(
                         f"Alert suppressed: cooldown active for encounter {encounter_id} "
@@ -123,10 +124,13 @@ class SafetyLayer:
         if isinstance(latest_time, str):
             try:
                 latest_time = datetime.fromisoformat(latest_time.replace('Z', '+00:00'))
-            except:
+            except Exception:
                 return 999
-        
+
         if isinstance(latest_time, datetime):
+            # Normalize both to UTC-naive for consistent arithmetic
+            if latest_time.tzinfo is not None:
+                latest_time = latest_time.astimezone(timezone.utc).replace(tzinfo=None)
             age = datetime.utcnow() - latest_time
             return age.total_seconds() / 60
         

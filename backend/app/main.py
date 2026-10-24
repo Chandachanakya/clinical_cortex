@@ -6,7 +6,6 @@ from app.routers import auth, patients, vitals, alerts, reports, admin, demo
 from app.websocket import ConnectionManager
 from app.database import init_db
 from app.agents.orchestrator import RiskMonitoringOrchestrator
-from app.config import settings
 
 manager = ConnectionManager()
 orchestrator = None

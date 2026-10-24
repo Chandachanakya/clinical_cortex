@@ -12,10 +12,6 @@ from datetime import datetime, timedelta
 engine = create_async_engine(
     settings.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://"),
     echo=False,
-    pool_size=20,
-    max_overflow=10,
-    pool_recycle=3600,
-    pool_timeout=30
 )
 
 # Create async session factory

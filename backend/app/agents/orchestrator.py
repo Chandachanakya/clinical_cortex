@@ -137,8 +137,13 @@ class RiskMonitoringOrchestrator:
             state["risk_scores"]
         )
         state["guidelines"] = guidelines
-        await self.audit_logger.log("guidelines_retrieved", state["encounter_id"],
-                                    {"guidelines": guidelines})
+        try:
+            await self.audit_logger.log(
+                "guidelines_retrieved", state["encounter_id"],
+                data={"query_terms": query_terms},
+                output_data={"guidelines_count": len(guidelines)})
+        except RuntimeError:
+            pass
         return state
     
     async def explanation_node(self, state: AgentState) -> AgentState:
@@ -150,8 +155,13 @@ class RiskMonitoringOrchestrator:
             state["vitals"]
         )
         state["explanation"] = explanation
-        await self.audit_logger.log("explanation_generated", state["encounter_id"],
-                                    {"explanation": explanation})
+        try:
+            await self.audit_logger.log(
+                "explanation_generated", state["encounter_id"],
+                data={"risk_level": explanation.get("risk_level")},
+                output_data={"explanation": explanation})
+        except RuntimeError:
+            pass
         return state
     
     async def safety_node(self, state: AgentState) -> AgentState:

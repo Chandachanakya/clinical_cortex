@@ -1,12 +1,12 @@
 import chromadb
 from chromadb.config import Settings
-from chromadb.utils import embedding_functions
+from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 from typing import List, Dict
 from app.config import settings
 import os
 
 # Use a local embedding function — no internet download required
-_LOCAL_EF = embedding_functions.DefaultEmbeddingFunction()
+_LOCAL_EF = DefaultEmbeddingFunction()
 
 
 class RAGRetriever:
