@@ -1,0 +1,92 @@
+# ────────────────────────────────────────────────────────────────────────────────
+#  Clinical Cortex — .gitignore
+# ────────────────────────────────────────────────────────────────────────────────
+
+# ─── Python ──────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# mypy / type-checkers
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+
+# ─── Node / Frontend ────────────────────────────────────────────────────────────
+node_modules/
+.pnp.*
+.yarn/
+*.tsbuildinfo
+.next/
+out/
+.nuxt/
+.cache/
+
+# ─── Environment & Secrets ──────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ─── IDE / Editor ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ─── OS Artifacts ────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─── ML Models (binary — regenerate via `scripts/train_models.py`) ───────────────
+backend/models/*.pkl
+
+# ─── ChromaDB Data (regenerate via `scripts/seed_guidelines.py`) ─────────────────
+chroma_db/
+backend/chroma_db/
+
+# ─── Debug / Scratch Files ───────────────────────────────────────────────────────
+*.txt
+!requirements.txt
+!README.txt
+backend/check_*.py
+backend/test_*.py
+backend/simulate_*.py
+backend/final_audit.py
+
+# ─── Logs ────────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── Docker (future) ────────────────────────────────────────────────────────────
+.docker/
+docker-compose.override.yml
